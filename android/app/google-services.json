@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "449134120819",
+    "project_id": "swallow-63849",
+    "storage_bucket": "swallow-63849.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449134120819:android:86a6efcc7784d7253f3f06",
+        "android_client_info": {
+          "package_name": "com.example.swallow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGVye4DdPtmJ1PzI6jBnxW-tRVbPxlJEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
