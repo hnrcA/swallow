@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:swallow/Landing/Scaffold/landing_screen.dart';
 import 'firebase_options.dart';
-import 'package:get/get.dart';
+
+import 'package:swallow/common/color.dart';
+import 'package:swallow/Common/router.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,17 +15,17 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple
+    return MaterialApp(
+      title: 'Swallow',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: backgroundColor,
       ),
-      home:Center(child:Container(child: Text("Project Started"),))
+      onGenerateRoute: (settings) => generateRoute(settings),
+      home: const LandingScreen()
     );
   }
 }
