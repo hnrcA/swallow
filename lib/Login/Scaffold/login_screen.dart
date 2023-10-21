@@ -1,16 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Common/Widgets/button.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:swallow/Login/controller.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   static const route= '/login';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final controller = TextEditingController();
   Country? country;
 
@@ -20,8 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
         country = _country;
       });
     });
-
   }
+
+  void sendNumber() {
+    String number = controller.text.trim();
+    if(country != null && number.isNotEmpty) {
+      ref.read(controllerProvider).signInWithPhone(context, '+${country!.phoneCode}$number');
+    }
+}
 
   @override
   void dispose() {
@@ -36,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text("Add meg a telefonszámod"),
         elevation: 10,
+        backgroundColor: Colors.lightBlue,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -68,8 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               width: 90,
               child: CustomButton(
-                "Tovább",
-                  (){},
+                  'Tovább',
+                  sendNumber
               ),
             ),
           ],
