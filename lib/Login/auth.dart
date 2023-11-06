@@ -11,6 +11,8 @@ import 'package:swallow/Login/Scaffold/otp_screen.dart';
 import 'package:swallow/Login/Scaffold/user_screen.dart';
 import 'package:swallow/Model/user.dart';
 
+import '../Common/Layouts/mobile_layout.dart';
+
 final authProvider = Provider((ref) => Auth(FirebaseAuth.instance, FirebaseFirestore.instance));
 
 class Auth {
@@ -25,7 +27,7 @@ class Auth {
           await auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
-          throw Exception(e.message);
+          snackBar(context, e.toString());
         },
         codeSent: (String verificationId, int? resendToken) async {
           Navigator.pushNamed(context, OtpScreen.route, arguments: verificationId);
@@ -40,18 +42,28 @@ class Auth {
     Navigator.pushNamedAndRemoveUntil(context, UserScreen.route, (route) => false);
   }
 
+  Future<UserM?> getCurrentUser() async {
+    var data = await firestore.collection('Users').doc(auth.currentUser?.uid).get();
+    UserM? user;
+    if (data.data() != null) {
+      user = UserM.fromMap(data.data()!);
+    }
+    return user;
+}
+
   void savePicture (BuildContext context, String name, File? picture, ProviderRef ref) async {
     try {
       //TODO Avatar change
       String uid = auth.currentUser!.uid;
       String url = 'https://img.freepik.com/premium-vector/man-character_665280-46970.jpg';
       url = await ref.read(toStorageProvider).storeFile('/Profile_pictures/$uid', picture!);
-      
-      var user = UserM(uid: uid, name: name, phone: auth.currentUser!.uid, picture: url);
+      var user = UserM(uid: uid, name: name, phone: auth.currentUser!.phoneNumber.toString(), picture: url);
       await firestore.collection('Users').doc(uid).set(user.toMap());
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen(),), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MobileLayout(),), (route) => false);
     } catch (e) {
       snackBar(context, e.toString());
+      print(e);
     }
   }
+
 }

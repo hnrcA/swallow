@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Login/auth.dart';
 
 class OtpScreen extends ConsumerWidget {
-  static const route= '/otp';
+  static const String route= '/otp';
   final String verificationId;
   const OtpScreen({Key? key, required this.verificationId}) : super(key: key);
 

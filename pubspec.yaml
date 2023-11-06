@@ -38,10 +38,12 @@ dependencies:
   firebase_core: ^2.18.0
   country_picker: ^2.0.21
   firebase_auth: ^4.11.1
-  firebase_storage: ^11.3.1
+  firebase_storage: ^11.4.0
   flutter_riverpod: ^2.4.4
   cloud_firestore: ^4.11.0
   image_picker: ^1.0.4
+  flutter_contacts: ^1.1.7+1
+  uuid: ^4.1.0
 
 dev_dependencies:
   flutter_test:
