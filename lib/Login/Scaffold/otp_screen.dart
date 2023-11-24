@@ -5,6 +5,7 @@ import 'package:swallow/Login/auth.dart';
 class OtpScreen extends ConsumerWidget {
   static const String route= '/otp';
   final String verificationId;
+
   const OtpScreen({Key? key, required this.verificationId}) : super(key: key);
 
   void verifyCode(BuildContext context, String code, WidgetRef ref) {
@@ -16,7 +17,7 @@ class OtpScreen extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Erősítd meg a telefonszámot"),
+        title: const Text("Hitelesítés"),
         elevation: 10,
         backgroundColor: Colors.lightBlue,
       ),
@@ -24,9 +25,10 @@ class OtpScreen extends ConsumerWidget {
         child: Column(
           children: [
             const SizedBox(height: 15),
-            const Text("Az sms kiküldésre került!"),
+            const Text("Az azonosításhoz szükséges sms kiküldésre került!"),
+            const SizedBox(height: 25),
             SizedBox(
-              width: size.width*0.4,
+              width: size.width*0.6,
               child:  TextField(
                 textAlign: TextAlign.center,
                 decoration: const InputDecoration(
@@ -40,8 +42,6 @@ class OtpScreen extends ConsumerWidget {
                 },
               ),
             ),
-            SizedBox(height: size.height*0.2),
-            const Text("Gomb helye")
           ],
         ),
       ),

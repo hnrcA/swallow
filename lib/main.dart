@@ -1,5 +1,3 @@
-//TODO SZÍNEK Kiválasztása
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,16 +24,16 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Swallow',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.grey,
+      theme: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: Colors.white,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: ref.watch(userAuthProvider).when(data: (user) {
-        if (user == null) {
-          return const LandingScreen();
-        }
-        return const MobileLayout();
-      }, error: (err, trace) {snackBar(context, err.toString());}, loading: () => const Loader()),
+          if (user == null) {
+            return const LandingScreen();
+          }
+          return const MobileLayout();
+      }, error: (err, trace) {}, loading: () => const Loader()),
     );
   }
 }

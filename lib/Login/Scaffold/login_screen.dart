@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Common/Widgets/button.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:swallow/Login/controller.dart';
 
@@ -17,6 +15,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final controller = TextEditingController();
   Country? country;
 
+  //region Logic
   void chooseCountry () {
     showCountryPicker(context: context, onSelect: (Country _country) {
       setState(() {
@@ -38,6 +37,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     controller.dispose();
   }
 
+  //endregion
+
+  //TODO FINOMÍTÁS
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -53,35 +55,43 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Erősítsd meg a telefonszámod"),
+              const Text("Fiókodba való bejelentkezéshez,"
+                  " illetve regisztrációjához "
+                  "szükséged lesz a telefonszámodra,"
+                  "mely alapján azonosítunk téged.", textAlign: TextAlign.center,),
               const SizedBox(height: 10,),
               TextButton(onPressed: chooseCountry,
-                   child: const Text("Válassz hívót"),
+                   child: const Text("Válaszd ki országod hívószámát"),
               ),
               const SizedBox(height: 10),
                Row(
                 children: [
                   if(country!=null)
-                   Text('+${country!.phoneCode}'),
+                   Padding(
+                     padding: const EdgeInsets.only(top: 8.0),
+                     child: Text('+${country!.phoneCode}', style: const TextStyle(
+                       fontSize: 16,
+                       fontWeight: FontWeight.bold,
+                     ),),
+                   ),
                   const SizedBox(width: 10),
                   SizedBox(
                     width: size.width*0.7,
                     child: TextField(
                       controller: controller,
+                      textAlign: TextAlign.left,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
-                        hintText: 'Telószám',
+                        hintText: 'Telefonszámod',
                       ),
                     ) ,
                   ),
                 ],
               ),
-              SizedBox(height: size.height*0.6),
+              SizedBox(height: size.height*0.01),
               SizedBox(
                 width: 90,
-                child: CustomButton(
-                    'Tovább',
-                    sendNumber
-                ),
+                child: ElevatedButton(onPressed: sendNumber,child: const Text("Tovább"),)
               ),
             ],
           ),

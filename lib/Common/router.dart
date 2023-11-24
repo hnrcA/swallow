@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swallow/Chat/Scaffold/mobile_chat.dart';
 import 'package:swallow/Login/Scaffold/login_screen.dart';
+import 'package:swallow/Profile/Scaffold/profile_screen.dart';
 import '../Contact/Scaffold/select_contact_screen.dart';
 import '../Login/Scaffold/otp_screen.dart';
 import '../Login/Scaffold/user_screen.dart';
@@ -16,6 +17,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case UserScreen.route:
       return MaterialPageRoute(builder: (context) => const UserScreen(),
+      );
+    case ProfileScreen.route:
+      return MaterialPageRoute(builder: (context) =>  const ProfileScreen(),
       );
     case ContactScreen.route:
       return MaterialPageRoute(builder: (context) => const ContactScreen(),

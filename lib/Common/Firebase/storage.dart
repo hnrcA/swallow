@@ -10,9 +10,9 @@ class ToStorage {
   ToStorage(this.storage);
 
   Future<String> storeFile(String ref, File file) async {
-    UploadTask uploadTask = storage.ref().child(ref).putFile(file);
-    TaskSnapshot snapshot = await uploadTask;
-    String url = await snapshot.ref.getDownloadURL();
-    return url;
+      UploadTask uploadTask = storage.ref().child(ref).putFile(file);
+      TaskSnapshot snapshot = await uploadTask;
+      String url = await snapshot.ref.getDownloadURL();
+      return url;
   }
 }

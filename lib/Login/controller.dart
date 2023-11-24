@@ -38,4 +38,11 @@ class Controller {
     UserM? user = await auth.getCurrentUser();
     return user;
   }
+
+  Stream<UserM> userdataById (String userId) {
+    return auth.userData(userId);
+  }
+  void setUserState (bool isOnline) async {
+    auth.setUserState(isOnline);
+  }
 }

@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Common/Firebase/storage.dart';
 import 'package:swallow/Common/common.dart';
-import 'package:swallow/Login/Scaffold/login_screen.dart';
 import 'package:swallow/Login/Scaffold/otp_screen.dart';
 import 'package:swallow/Login/Scaffold/user_screen.dart';
 import 'package:swallow/Model/user.dart';
@@ -35,6 +33,11 @@ class Auth {
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
   }
+
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   //TODO  CATCH
   void verifyCode(BuildContext context, String verificationId, String code) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: code);
@@ -49,21 +52,30 @@ class Auth {
       user = UserM.fromMap(data.data()!);
     }
     return user;
-}
+  }
 
   void savePicture (BuildContext context, String name, File? picture, ProviderRef ref) async {
     try {
-      //TODO Avatar change
       String uid = auth.currentUser!.uid;
-      String url = 'https://img.freepik.com/premium-vector/man-character_665280-46970.jpg';
-      url = await ref.read(toStorageProvider).storeFile('/Profile_pictures/$uid', picture!);
-      var user = UserM(uid: uid, name: name, phone: auth.currentUser!.phoneNumber.toString(), picture: url);
+      String url = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+      if(picture != null) {
+        url = await ref.read(toStorageProvider).storeFile('/Profile_pictures/$uid', picture);
+      }
+      var user = UserM(uid: uid, name: name, phone: auth.currentUser!.phoneNumber.toString(), isOnline: true, picture: url);
       await firestore.collection('Users').doc(uid).set(user.toMap());
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MobileLayout(),), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  MobileLayout()), (route) => false);
     } catch (e) {
-      snackBar(context, e.toString());
-      print(e);
+      snackBar(context, "Nem választottál ki képet! :)"); //TODO ne hagyd itt
     }
   }
 
+  Stream<UserM> userData(String userId) {
+    return firestore.collection('Users').doc(userId).snapshots().map((event) => UserM.fromMap(event.data()!));
+  }
+
+  void setUserState (bool isOnline) async {
+    await firestore.collection('Users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline
+    });
+  }
 }

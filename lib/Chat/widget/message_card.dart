@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:swallow/Chat/widget/display_media.dart';
+import 'package:swallow/Common/Enum/message.dart';
 
 class MyMessageCard extends StatelessWidget {
   final String message;
   final String date;
+  final MessageEnum messageEnum;
+  final bool seen;
 
-  const MyMessageCard({Key? key, required this.message, required this.date}) : super(key: key);
+  const MyMessageCard({Key? key, required this.message, required this.date, required this.messageEnum, required this.seen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,28 +16,29 @@ class MyMessageCard extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width - 45,
+          maxWidth: MediaQuery.of(context).size.width - 60,
+          minWidth:MediaQuery.of(context).size.width- 290,
         ),
         child: Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          color: Colors.green,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          color: Colors.grey,
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
+                padding: messageEnum.type == MessageEnum.text ? const EdgeInsets.only(
+                  left: 40,
                   right: 30,
                   top: 5,
                   bottom: 20,
+                ): const EdgeInsets.only(
+                  left: 5,
+                  right: 5,
+                  top: 5,
+                  bottom: 25,
                 ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                child: DisplayMedia(message, messageEnum),
               ),
               Positioned(
                 bottom: 4,
@@ -50,10 +55,10 @@ class MyMessageCard extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    const Icon(
-                      Icons.done_all,
+                    Icon(
+                     seen ?  Icons.remove_red_eye_outlined: Icons.done,
                       size: 20,
-                      color: Colors.white60,
+                      color: seen ? Colors.purple : Colors.white,
                     ),
                   ],
                 ),

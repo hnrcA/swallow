@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Common/common.dart';
-import 'package:swallow/Login/auth.dart';
 import 'package:swallow/Login/controller.dart';
 
 class UserScreen extends ConsumerStatefulWidget {
@@ -47,7 +46,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
                 Stack(
                   children: [
                      picture == null ? const CircleAvatar(
-                      backgroundImage: NetworkImage('https://img.freepik.com/premium-vector/man-character_665280-46970.jpg'),
+                      backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'), //TODO
                       backgroundColor: Colors.yellow,
                       radius: 70,
                     ):CircleAvatar(
@@ -66,15 +65,15 @@ class _UserScreenState extends ConsumerState<UserScreen> {
                   children: [
                     Container(
                       width: size.width * 0.85,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       child: TextField(
                         controller: name,
                         decoration: const InputDecoration(
-                          hintText: "Add meg a neved" //TODO születési dátum ?
+                          hintText: "Add meg a neved"
                         ),
                       ),
                     ),
-                    IconButton(onPressed: saveUserData, icon: Icon(Icons.done_outline))
+                    IconButton(onPressed: saveUserData, icon: const Icon(Icons.done_outline))
                   ],
                 )
               ],

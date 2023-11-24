@@ -2,7 +2,7 @@ import 'package:swallow/Common/Enum/message.dart';
 
 class Message {
   final String senderId;
-  final String recieverId;
+  final String recieverId; //todo átírás
   final String messageId;
   final String message;
   final DateTime sent;

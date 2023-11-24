@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swallow/Common/Widgets/button.dart';
 import 'package:swallow/Login/Scaffold/login_screen.dart';
 
 //TODO tökélesíteni
@@ -16,20 +15,30 @@ class LandingScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 50),
-            const Text("Üdvözlünk", style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w600,
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 30),
+              const Text("Üdvözlünk a swallowban", style: TextStyle(  //TODO finomítás
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-             SizedBox(height: size.height /10),
-            //TODO kép esetleg valami szöveg
-            SizedBox(height: size.height / 10),
-            CustomButton('Elfogadom', () => proceedtoLogin(context))
-          ],
+              const SizedBox(height: 10),
+              const Text("Már vártunk rád", style: TextStyle(
+                 fontSize: 26,
+                  fontWeight: FontWeight.w400
+               ),),
+              const SizedBox(height: 60),
+              const Icon(Icons.email_outlined, size: 190.0,color: Colors.lightBlue,),
+              SizedBox(height: size.height / 10),
+              const Text("A tovább gomb megnyomásával, elfogadod szerződési és felhasználási feltételeinket.", style: TextStyle(
+                  fontSize: 9,
+              ),),
+              ElevatedButton(onPressed: () => proceedtoLogin(context), child: const Text("'Tovább'"))
+            ],
+          ),
         ),
       ),
     );

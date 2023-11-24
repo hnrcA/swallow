@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Chat/controller.dart';
+import 'package:swallow/Common/common.dart';
+import '../../Common/Enum/message.dart';
 
 
 class BottomChat extends ConsumerStatefulWidget {
@@ -18,11 +21,30 @@ class BottomChat extends ConsumerStatefulWidget {
 class _BottomChatState extends ConsumerState<BottomChat> {
   final TextEditingController _messageController = TextEditingController();
 
-  void sendMessage() async {
+
+  void sendMessage() {
     ref.read(chatControllerProvider).sendMessage(context, _messageController.text.trim(), widget.recieverId);
     setState(() {
       _messageController.text = '';
     });
+  }
+
+  void sendPicture(File file, MessageEnum messageEnum) {
+    ref.read(chatControllerProvider).sendPicture(context, file, widget.recieverId, messageEnum);
+  }
+
+  void selectPicture() async {
+    File? picture = await chooseImage(context);
+    if (picture!= null) {
+      sendPicture(picture, MessageEnum.picture);
+    }
+  }
+
+  void selectVideo() async {
+    File? video = await chooseVideo(context);
+    if (video!= null) {
+      sendPicture(video, MessageEnum.video);
+    }
   }
 
   @override
@@ -33,6 +55,7 @@ class _BottomChatState extends ConsumerState<BottomChat> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSendable = false;
     return Row(
       children: [
         Expanded(
@@ -41,22 +64,33 @@ class _BottomChatState extends ConsumerState<BottomChat> {
               bottom: 7,
               left: 25,
             ),
-            child: TextField(
+            child: TextFormField(
               controller: _messageController,
+              onChanged: (val) {
+                if(val.isNotEmpty) {
+                  setState(() {
+                    isSendable = true;
+                  });
+                } else {
+                  setState(() {
+                    isSendable = false;
+                  });
+                }
+              },
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.black,
+                fillColor: Colors.blueGrey,
                 suffixIcon: SizedBox(
                   width: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.camera_alt)),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.attach_file)), //TODO prefix ha kell
+                      IconButton(onPressed: selectPicture, icon: const Icon(Icons.image), color: Colors.white),
+                      IconButton(onPressed: selectVideo, icon: const Icon(Icons.movie_filter), color: Colors.white),
                     ],
                   ),
                 ),
-                hintText: 'Type a message!',
+                hintText: 'Üzenj valamit!',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(40.0),
                   borderSide: const BorderSide(
@@ -75,7 +109,7 @@ class _BottomChatState extends ConsumerState<BottomChat> {
               right: 2,
               left: 1,
             ),
-            child: IconButton(onPressed: sendMessage, icon: const Icon(Icons.send))),
+            child: IconButton(onPressed: _messageController.text.isEmpty ? null : sendMessage, icon: const Icon(Icons.send), color: Colors.lightBlue,)),
       ],
     );
   }

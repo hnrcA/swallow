@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +35,7 @@ class SelectContact {
         String phoneNumber = contact.phones[0].number.replaceAll(' ', '');
         if(phoneNumber == userData.phone) {
           found = true;
-          Navigator.pushNamed(context, MobileChat.route, arguments:{
+          Navigator.popAndPushNamed(context, MobileChat.route, arguments:{
             'uid' : userData.uid,
             'name' : userData.name,
           });

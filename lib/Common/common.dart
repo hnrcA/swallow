@@ -13,9 +13,20 @@ Future<File?> chooseImage(BuildContext context) async {
     final choosedPicture = await ImagePicker().pickImage(source: ImageSource.gallery);
     picture = File(choosedPicture!.path);
   } catch (e) {
-    snackBar(context, e.toString());
+    snackBar(context, "Nem választottál képet!");
   }
   return picture;
+}
+
+Future<File?> chooseVideo(BuildContext context) async {
+  File? video;
+  try {
+    final choosedVideo = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    video = File(choosedVideo!.path);
+  } catch (e) {
+    snackBar(context, e.toString());
+  }
+  return video;
 }
 
 class Loader extends StatelessWidget {

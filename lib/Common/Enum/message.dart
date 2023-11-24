@@ -1,7 +1,6 @@
 enum MessageEnum {
   text('text'),
-  image('image'),
-  audio('audio'),
+  picture('picture'),
   video('video');
 
   const MessageEnum(this.type);
@@ -13,10 +12,8 @@ extension ConvertMessage on String {
     switch (this) {
       case 'text':
         return MessageEnum.text;
-      case 'image':
-        return MessageEnum.image;
-      case 'audio':
-        return MessageEnum.audio;
+      case 'picture':
+        return MessageEnum.picture;
       case 'video':
         return MessageEnum.video;
       default:

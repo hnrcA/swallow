@@ -1,18 +1,50 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Contact/Scaffold/select_contact_screen.dart';
-import 'package:swallow/Login/Scaffold/login_screen.dart';
-import '../Widgets/contact.dart';
+import 'package:swallow/Login/auth.dart';
+import 'package:swallow/Profile/Scaffold/profile_screen.dart';
+import '../../Chat/widget/contact.dart';
 
-class MobileLayout extends StatelessWidget {
-  const MobileLayout({Key? key}) : super(key: key);
+class MobileLayout extends ConsumerStatefulWidget {
 
-//Todo kijelenkezés session dispose
+  const MobileLayout({super.key});
+  @override
+  ConsumerState<MobileLayout> createState() => _MobileLayoutState();
+}
+
+class _MobileLayoutState extends ConsumerState<MobileLayout> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch(state) {
+      case AppLifecycleState.resumed:
+        ref.read(authProvider).setUserState(true);
+        break;
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.hidden:
+        ref.read(authProvider).setUserState(false);
+        break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 1,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.lightBlue,
@@ -21,36 +53,18 @@ class MobileLayout extends StatelessWidget {
             'Swallow',
             style: TextStyle(
               fontSize: 20,
-              color: Colors.grey,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.search, color: Colors.grey),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.logout, color: Colors.grey),
+              icon: const Icon(Icons.settings, color: Colors.white),
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, LoginScreen.route, (route) => false);
+                Navigator.pushNamed(context, ProfileScreen.route);
               },
             ),
           ],
-          bottom: const TabBar(
-            indicatorColor: Colors.lightBlue,
-            indicatorWeight: 4,
-            labelColor: Colors.lightBlue,
-            unselectedLabelColor: Colors.grey,
-            labelStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            tabs: [
-              Tab(
-                text: 'Üzenetek',
-              ),
-            ],
-          ),
         ),
         body: const ContactsList(),
         floatingActionButton: FloatingActionButton(
@@ -63,7 +77,6 @@ class MobileLayout extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-      ),
-    );
+      );
   }
 }
