@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Common/Layouts/mobile_layout.dart';
+import 'package:swallow/Screens/home_screen.dart';
 import 'package:swallow/Common/common.dart';
-import 'package:swallow/Landing/Scaffold/landing_screen.dart';
-import 'package:swallow/Login/controller.dart';
+import 'package:swallow/Screens/Landing/landing_screen.dart';
+import 'package:swallow/Controllers/auth_controller.dart';
 import 'firebase_options.dart';
-
-import 'package:swallow/Common/router.dart';
+import 'package:swallow/Services/router.dart';
 
 
 
@@ -32,7 +31,7 @@ class MyApp extends ConsumerWidget {
           if (user == null) {
             return const LandingScreen();
           }
-          return const MobileLayout();
+          return const HomeScreen();
       }, error: (err, trace) {}, loading: () => const Loader()),
     );
   }

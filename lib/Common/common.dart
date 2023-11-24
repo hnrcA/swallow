@@ -2,29 +2,31 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+//For error messages
 void snackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-  //TODO MaterialBanner?
 }
 
-Future<File?> chooseImage(BuildContext context) async {
+//For picking image
+Future<File?> picturePicker(BuildContext context) async {
   File? picture;
   try {
-    final choosedPicture = await ImagePicker().pickImage(source: ImageSource.gallery);
-    picture = File(choosedPicture!.path);
+    final pickedPicture = await ImagePicker().pickImage(source: ImageSource.gallery);
+    picture = File(pickedPicture!.path);
   } catch (e) {
     snackBar(context, "Nem választottál képet!");
   }
   return picture;
 }
 
-Future<File?> chooseVideo(BuildContext context) async {
+//For picking video same as image picker
+Future<File?> videoPicker(BuildContext context) async {
   File? video;
   try {
-    final choosedVideo = await ImagePicker().pickVideo(source: ImageSource.gallery);
-    video = File(choosedVideo!.path);
+    final pickedVideo = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    video = File(pickedVideo!.path);
   } catch (e) {
-    snackBar(context, e.toString());
+    snackBar(context, "Nem választottál videót!");
   }
   return video;
 }
