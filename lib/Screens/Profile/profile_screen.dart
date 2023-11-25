@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Screens/Landing/landing_screen.dart';
 import 'package:swallow/Controllers/profile_controller.dart';
 import 'package:swallow/Common/common.dart';
+import 'package:swallow/Screens/home_screen.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   static const String route='/profile';
@@ -37,20 +39,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
   }
 
+  void deleteUser() {
+    ref.read(profileControllerProvider).deleteUser();
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
+  }
+
   void updateData() async {
     String username = name.text.trim();
     if (username.isNotEmpty) {
       ref.read(profileControllerProvider).saveUser(context, username, picture);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const HomeScreen()), (route) => false);
     }
   }
-  String? getPhoneNumber() {
+  (String?,String?,String?) getPhoneNumber() {
      return ref.read(profileControllerProvider).getPhoneNumber();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    String? phone = getPhoneNumber();
+    var(dispname,phone,photo) = getPhoneNumber();
     return  Scaffold(
       appBar: AppBar(
         title:const Text("Profil adatok"),
@@ -63,9 +71,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 children: [
                   Stack(
                     children: [
-                      picture == null ? const CircleAvatar(
-                        backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'),
-                        backgroundColor: Colors.yellow,
+                      picture == null ?  CircleAvatar(
+                        backgroundImage: NetworkImage('$photo'),
+                        backgroundColor: Colors.white,
                         radius: 70,
                       ):CircleAvatar(
                         backgroundImage: FileImage(picture!),
@@ -84,11 +92,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       Container(
                         width: size.width,
                         padding: const EdgeInsets.all(20),
-                        child:  TextField(
+                        child:  TextFormField(
                           textAlign: TextAlign.center,
                           readOnly: true,
                           decoration: InputDecoration(
-                              hintText: phone,
+                              hintText: "Telefonszámod: $phone",
+                              //border: InputBorder.none,
                           ),
                         ),
                       ),
@@ -98,18 +107,21 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     children: [
                       Container(width: size.width,
                         padding: const EdgeInsets.all(20),
-                        child: TextField(
-                          controller: name,
+                        child: TextFormField(
+                          controller: name..text = dispname!,
                           textAlign: TextAlign.center,
-                          decoration: const InputDecoration(
-                              hintText: "Add meg az új neved" //TODO felhasználónév kijelzés
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9 ]'))],
+                          maxLength: 15,
+                          decoration:const InputDecoration(
+                              hintText: "Add meg az új neved"
                           ),
                         ),
                       )
                     ],
                   ),
                   TextButton(onPressed: updateData, child: const Text("Mentés")),
-                  TextButton(onPressed: logout, child: const Text("Kijelentkezés"))
+                  TextButton(onPressed: deleteUser, child: const Text("Profil törlése", style: TextStyle(color: Colors.red)),),
+                  TextButton(onPressed: logout, child: const Text("Kijelentkezés")),
                 ],
               ),
             )

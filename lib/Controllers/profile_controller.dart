@@ -17,16 +17,21 @@ class ProfileController {
 
   ProfileController({required this.authService, required this.ref});
 
-  Future<void> logOut() async {
+  Future<void> logOut()  async {
     authService.setUserState(false); //set user to offline
     authService.logOut();
   }
-
-  void saveUser(BuildContext context, String name, File? picture) {
-    authService.savePicture(context, name, picture, ref);
+  Future<void> deleteUser() async {
+      authService.deleteUser();
   }
 
-  String? getPhoneNumber() {
-    return authService.auth.currentUser!.phoneNumber;
+  void saveUser(BuildContext context, String name, File? picture) {
+    authService.saveUser(context, name, picture, ref);
+  }
+
+  (String?,String?,String?) getPhoneNumber() { //TODO ÁTNEVEZÉS
+    return (authService.auth.currentUser!.displayName,
+    authService.auth.currentUser!.phoneNumber,
+    authService.auth.currentUser!.photoURL);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:swallow/Controllers/auth_controller.dart';
@@ -68,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 children: [
                   if(country!=null)
                    Padding(
-                     padding: const EdgeInsets.only(top: 8.0),
+                     padding: const EdgeInsets.only(top: 9.0),
                      child: Text('+${country!.phoneCode}', style: const TextStyle(
                        fontSize: 16,
                        fontWeight: FontWeight.bold,
@@ -77,12 +78,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(width: 10),
                   SizedBox(
                     width: size.width*0.7,
-                    child: TextField(
+                    child: TextFormField(
                       controller: controller,
                       textAlign: TextAlign.left,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      maxLength: 15,
                       decoration: const InputDecoration(
                         hintText: 'Telefonszámod',
+                        border: InputBorder.none,
                       ),
                     ) ,
                   ),

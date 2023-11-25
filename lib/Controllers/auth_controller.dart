@@ -32,7 +32,7 @@ class AuthController {
   }
 
   void saveUser(BuildContext context, String name, File? picture) {  //profile picture save
-    authService.savePicture(context, name, picture, ref);
+    authService.saveUser(context, name, picture, ref);
   }
 
   Future<UserModel?> getUser () async {          //current user data
