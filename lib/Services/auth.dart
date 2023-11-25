@@ -41,6 +41,7 @@ class AuthService {
     try {
       await firestore.collection('Users').doc(auth.currentUser?.uid).delete();
       await auth.currentUser!.delete();
+      await auth.currentUser!.reauthenticateWithProvider(PhoneAuthProvider());
     } on FirebaseAuthException catch (e) {
       if (e.code == "requires-recent-login") {
         _reAuthenticateThenDelete();
@@ -53,7 +54,7 @@ class AuthService {
   Future<void> _reAuthenticateThenDelete() async {  //TODO
     try {
       await auth.currentUser!.reauthenticateWithProvider(PhoneAuthProvider());
-      await auth.currentUser!.delete();
+      //await auth.currentUser!.delete();
     } catch (e) {
       print(e);
     }
@@ -69,12 +70,16 @@ class AuthService {
   }
 
   Future<UserModel?> getCurrentUser() async {
-    var data = await firestore.collection('Users').doc(auth.currentUser?.uid).get();
-    UserModel? user;
-    if (data.data() != null) {
-      user = UserModel.fromMap(data.data()!);
+    try {
+      var data = await firestore.collection('Users').doc(auth.currentUser!.uid).get();
+      UserModel? user;
+      if (data.data() != null) {
+            user = UserModel.fromMap(data.data()!);
+          }
+      return user;
+    } on TypeError catch (e) {
+      return null; //This needed cause, when no one is logged in it will throw a Null check exception at the app start.
     }
-    return user;
   }
 
   void saveUser(BuildContext context, String name, File? picture, ProviderRef ref) async {
@@ -97,26 +102,6 @@ class AuthService {
       snackBar(context, "Nem választottál ki képet! :)");
     }
   }
-
-  /*void updateUser(BuildContext context, String? name, File? picture, ProviderRef ref) async {
-    try {
-      String uid = auth.currentUser!.uid;
-      String url = auth.currentUser!.photoURL!;
-      String nev = auth.currentUser!.displayName!;
-      if(picture != null) {
-        url = await ref.read(storageServiceProvider).storeFile('/Profile_pictures/$uid', picture);
-        await auth.currentUser!.updatePhotoURL(url);
-      }
-      if(name != null) {
-        nev = name;
-        await auth.currentUser!.updateDisplayName(nev);
-      }
-      var user = UserModel(uid: uid, name: nev, phone: auth.currentUser!.phoneNumber.toString(), isOnline: true, picture: url);
-      await firestore.collection('Users').doc(uid).set(user.toMap());
-    } catch (e) {
-      snackBar(context, "Nem választottál ki képet! :)");
-    }
-  }*/
 
   Stream<UserModel> userData(String userId) {
     return firestore.collection('Users').doc(userId).snapshots().map((event) => UserModel.fromMap(event.data()!));

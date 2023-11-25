@@ -5,7 +5,7 @@ import 'package:swallow/Screens/Login/login_screen.dart';
 class LandingScreen extends StatelessWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
-  void proceedtoLogin(BuildContext context) {
+  void login(BuildContext context) {
     Navigator.pushNamed(context, LoginScreen.route);
   }
 
@@ -36,7 +36,7 @@ class LandingScreen extends StatelessWidget {
               const Text("A tovább gomb megnyomásával, elfogadod szerződési és felhasználási feltételeinket.", style: TextStyle(
                   fontSize: 9,
               ),),
-              ElevatedButton(onPressed: () => proceedtoLogin(context), child: const Text("'Tovább'"))
+              ElevatedButton(onPressed: () => login(context), child: const Text("Tovább"))
             ],
           ),
         ),

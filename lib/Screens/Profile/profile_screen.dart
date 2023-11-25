@@ -28,7 +28,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     name.dispose();
   }
 
-  void choosePicture() async {
+  void pickPicture() async {
     picture = await picturePicker(context);
     setState(() {
     });
@@ -41,7 +41,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   void deleteUser() {
     ref.read(profileControllerProvider).deleteUser();
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
+    //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
   }
 
   void updateData() async {
@@ -83,7 +83,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           bottom: -14,
                           left: 105,
                           child: IconButton(
-                              onPressed: choosePicture,
+                              onPressed: pickPicture,
                               icon: const Icon(Icons.add_circle_outline)))
                     ],
                   ),
@@ -110,7 +110,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         child: TextFormField(
                           controller: name..text = dispname!,
                           textAlign: TextAlign.center,
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9 ]'))],
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-ZÁáÉéÓóÚúŰű0-9 ]'))],
                           maxLength: 15,
                           decoration:const InputDecoration(
                               hintText: "Add meg az új neved"

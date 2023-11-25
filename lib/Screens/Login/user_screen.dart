@@ -25,7 +25,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
     name.dispose();
   }
 
-  void choosePicture() async {
+  void pickPicture() async {
     picture = await picturePicker(context);
     setState(() {
     });
@@ -60,7 +60,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
                       bottom: -14,
                         left: 105,
                         child: IconButton(
-                            onPressed: choosePicture,
+                            onPressed: pickPicture,
                             icon: const Icon(Icons.add_circle_outline)))
                   ],
                 ),
@@ -71,7 +71,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: name,
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9 ]'))],
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-ZÁáÉéÓóÚúŰű0-9 ]'))],
                         maxLength: 15,
                         decoration: const InputDecoration(
                           hintText: "Add meg a neved"
