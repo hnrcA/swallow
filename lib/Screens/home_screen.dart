@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Screens/Contact/select_contact_screen.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Services/authService.dart';
 import 'package:swallow/Screens/Profile/profile_screen.dart';
 import 'package:swallow/Widgets/Chat/contact_list.dart';
 

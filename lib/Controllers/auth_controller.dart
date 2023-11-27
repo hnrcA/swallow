@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Services/authService.dart';
 import 'package:swallow/Models/user.dart';
 
 //region riverpod providers

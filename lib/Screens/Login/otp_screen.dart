@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Screens/Login/user_screen.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Services/authService.dart';
 
 class OtpScreen extends ConsumerWidget {
   static const String route= '/otp';

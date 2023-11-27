@@ -4,7 +4,7 @@ import 'package:swallow/Widgets/Chat/chat_bottom_field.dart';
 import 'package:swallow/Widgets/Chat/chat_list.dart';
 import 'package:swallow/Screens/home_screen.dart';
 import 'package:swallow/Common/common.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Services/authService.dart';
 import 'package:swallow/Controllers/chat_controller.dart';
 import 'package:swallow/Models/user.dart';
 

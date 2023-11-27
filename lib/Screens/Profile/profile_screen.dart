@@ -2,10 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Screens/Landing/landing_screen.dart';
 import 'package:swallow/Controllers/profile_controller.dart';
 import 'package:swallow/Common/common.dart';
+import 'package:swallow/Screens/Landing/landing_screen.dart';
 import 'package:swallow/Screens/home_screen.dart';
+
 
 class ProfileScreen extends ConsumerStatefulWidget {
   static const String route='/profile';
@@ -36,12 +37,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   void logout() {
     ref.read(profileControllerProvider).logOut();
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> const LandingScreen()), (route) => false);
   }
 
   void deleteUser() {
-    ref.read(profileControllerProvider).deleteUser();
-    //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
+    ref.read(profileControllerProvider).deleteUser(context);
   }
 
   void updateData() async {
@@ -120,7 +120,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ],
                   ),
                   TextButton(onPressed: updateData, child: const Text("Mentés")),
-                  TextButton(onPressed: deleteUser, child: const Text("Profil törlése", style: TextStyle(color: Colors.red)),),
+                  TextButton(onPressed:  deleteUser, child: const Text("Profil törlése", style: TextStyle(color: Colors.red)),),
                   TextButton(onPressed: logout, child: const Text("Kijelentkezés")),
                 ],
               ),
