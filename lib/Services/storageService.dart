@@ -17,6 +17,4 @@ class StorageService {
       String url = await snapshot.ref.getDownloadURL();
       return url;
   }
-
-  //TODO Delete file
 }

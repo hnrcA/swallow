@@ -32,7 +32,7 @@ class ContactService {
       var user = await firestore.collection('Users').get();
       bool found = false;
       for (var docs in user.docs) {
-        var userData = UserModel.fromMap(docs.data());
+        UserModel userData = UserModel.fromMap(docs.data());
         String phoneNumber = contact.phones[0].number.replaceAll(' ', '');
         if(phoneNumber == userData.phone) {
           found = true;

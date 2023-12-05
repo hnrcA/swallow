@@ -21,7 +21,7 @@ class ContactList extends ConsumerWidget {
           }
           return ListView.builder(
             shrinkWrap: true,
-            itemCount: snapshot.data!.length,
+            itemCount: snapshot.data?.length,
             itemBuilder: (context, index) {
               var chatData = snapshot.data![index];
               return Column(

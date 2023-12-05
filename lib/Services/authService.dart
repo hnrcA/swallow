@@ -42,11 +42,11 @@ class AuthService {
   Future<void> deleteUser(BuildContext context) async {
     try {
       var uid = auth.currentUser!.uid;
-      await auth.currentUser!.delete();
       await firestore.collection('Users').doc(uid).
       update({'name': 'Törölt felhasználó',
-        'photo': 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-        'isOnline': 'false' });
+        'picture': 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+        'isOnline': 'false', 'phone': '00' });
+      await auth.currentUser!.delete();
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == "requires-recent-login") {

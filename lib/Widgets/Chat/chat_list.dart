@@ -21,7 +21,7 @@ class ChatList extends ConsumerStatefulWidget {
 }
 
 class _ChatListState extends ConsumerState<ChatList> {
-  final ScrollController scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController(initialScrollOffset: 50.0);
 
 
   @override
