@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Common/Enum/message.dart';
-import 'package:swallow/Services/chat.dart';
+import 'package:swallow/Services/chatService.dart';
 import 'package:swallow/Controllers/auth_controller.dart';
 import 'package:swallow/Models/chat.dart';
 import 'package:swallow/Models/message.dart';

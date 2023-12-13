@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Services/contact.dart';
+import 'package:swallow/Services/contactService.dart';
 
 //region riverpod providers
 final getContactProvider = FutureProvider((ref) {

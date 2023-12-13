@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Common/common.dart';
 import 'package:swallow/Controllers/auth_controller.dart';
+
+import '../home_screen.dart';
 
 class UserScreen extends ConsumerStatefulWidget {
   static const String route='/user';
@@ -22,7 +25,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
     name.dispose();
   }
 
-  void choosePicture() async {
+  void pickPicture() async {
     picture = await picturePicker(context);
     setState(() {
     });
@@ -32,6 +35,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
     String Name = name.text.trim();
     if (Name.isNotEmpty) {
       ref.read(authControllerProvider).saveUser(context, Name, picture);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
     }
   }
   @override
@@ -56,7 +60,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
                       bottom: -14,
                         left: 105,
                         child: IconButton(
-                            onPressed: choosePicture,
+                            onPressed: pickPicture,
                             icon: const Icon(Icons.add_circle_outline)))
                   ],
                 ),
@@ -65,8 +69,10 @@ class _UserScreenState extends ConsumerState<UserScreen> {
                     Container(
                       width: size.width * 0.85,
                       padding: const EdgeInsets.all(20),
-                      child: TextField(
+                      child: TextFormField(
                         controller: name,
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-ZÁáÉéÓóÚúŰű0-9 ]'))],
+                        maxLength: 15,
                         decoration: const InputDecoration(
                           hintText: "Add meg a neved"
                         ),

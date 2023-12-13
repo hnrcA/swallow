@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Screens/Login/user_screen.dart';
+import 'package:swallow/Services/authService.dart';
 
 class OtpScreen extends ConsumerWidget {
   static const String route= '/otp';
@@ -10,6 +12,7 @@ class OtpScreen extends ConsumerWidget {
 
   void verifyCode(BuildContext context, String code, WidgetRef ref) {
     ref.read(authServiceProvider).verifyCode(context, verificationId, code);
+    Navigator.pushNamedAndRemoveUntil(context, UserScreen.route, (route) => false); //todo jó-e
   }
 
   @override
@@ -29,17 +32,19 @@ class OtpScreen extends ConsumerWidget {
             const SizedBox(height: 25),
             SizedBox(
               width: size.width*0.6,
-              child:  TextField(
+              child:  TextFormField(
                 textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: 'Megerősítő kód'
-                ),
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                maxLength: 6,
                 onChanged: (value) {
                   if(value.length == 6) {
                     verifyCode(context, value.trim(), ref);
                   }
                 },
+                decoration: const InputDecoration(
+                    hintText: 'Megerősítő kód'
+                ),
               ),
             ),
           ],

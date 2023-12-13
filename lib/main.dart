@@ -6,7 +6,7 @@ import 'package:swallow/Common/common.dart';
 import 'package:swallow/Screens/Landing/landing_screen.dart';
 import 'package:swallow/Controllers/auth_controller.dart';
 import 'firebase_options.dart';
-import 'package:swallow/Services/router.dart';
+import 'package:swallow/Common/router.dart';
 
 
 
@@ -22,6 +22,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Swallow',
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.white,

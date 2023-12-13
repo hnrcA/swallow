@@ -13,8 +13,10 @@ Future<File?> picturePicker(BuildContext context) async {
   try {
     final pickedPicture = await ImagePicker().pickImage(source: ImageSource.gallery);
     picture = File(pickedPicture!.path);
-  } catch (e) {
+  } on TypeError {
     snackBar(context, "Nem választottál képet!");
+  } catch (e){
+    snackBar(context, e.toString());
   }
   return picture;
 }
@@ -25,8 +27,10 @@ Future<File?> videoPicker(BuildContext context) async {
   try {
     final pickedVideo = await ImagePicker().pickVideo(source: ImageSource.gallery);
     video = File(pickedVideo!.path);
+  } on TypeError {
+    snackBar(context, "Nem választottál képet!");
   } catch (e) {
-    snackBar(context, "Nem választottál videót!");
+    snackBar(context, e.toString());
   }
   return video;
 }

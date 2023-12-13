@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:swallow/Screens/Login/login_screen.dart';
+import 'package:swallow/Screens/Login/phone_screen.dart';
 
-//TODO tökélesíteni
 class LandingScreen extends StatelessWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
-  void proceedtoLogin(BuildContext context) {
-    Navigator.pushNamed(context, LoginScreen.route);
+  void login(BuildContext context) {
+    Navigator.pushNamed(context, PhoneScreen.route);
   }
 
   @override
@@ -20,7 +19,7 @@ class LandingScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 30),
-              const Text("Üdvözlünk a swallowban", style: TextStyle(  //TODO finomítás
+              const Text("Üdvözlünk a swallowban", style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w600,
                 ),
@@ -33,10 +32,10 @@ class LandingScreen extends StatelessWidget {
               const SizedBox(height: 60),
               const Icon(Icons.email_outlined, size: 190.0,color: Colors.lightBlue,),
               SizedBox(height: size.height / 10),
-              const Text("A tovább gomb megnyomásával, elfogadod szerződési és felhasználási feltételeinket.", style: TextStyle(
+              const Text("'A tovább gomb megnyomásával, elfogadod szerződési és felhasználási feltételeinket.'", style: TextStyle(
                   fontSize: 9,
               ),),
-              ElevatedButton(onPressed: () => proceedtoLogin(context), child: const Text("'Tovább'"))
+              ElevatedButton(onPressed: () => login(context), child: const Text("Tovább"))
             ],
           ),
         ),

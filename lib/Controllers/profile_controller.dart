@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Services/authService.dart';
 
 //region riverpod provider
 final profileControllerProvider= Provider((ref) {
@@ -17,16 +17,21 @@ class ProfileController {
 
   ProfileController({required this.authService, required this.ref});
 
-  Future<void> logOut() async {
+  Future<void> logOut()  async {
     authService.setUserState(false); //set user to offline
     authService.logOut();
   }
-
-  void saveUser(BuildContext context, String name, File? picture) {
-    authService.savePicture(context, name, picture, ref);
+  Future<void> deleteUser(BuildContext context) async {
+      authService.deleteUser(context);
   }
 
-  String? getPhoneNumber() {
-    return authService.auth.currentUser!.phoneNumber;
+  void saveUser(BuildContext context, String name, File? picture) {
+    authService.saveUser(context, name, picture, ref);
+  }
+
+  (String?,String?,String?) getUserStrings() {
+    return (authService.auth.currentUser!.displayName,
+    authService.auth.currentUser!.phoneNumber,
+    authService.auth.currentUser!.photoURL);
   }
 }

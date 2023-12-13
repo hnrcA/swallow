@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swallow/Services/auth.dart';
+import 'package:swallow/Services/authService.dart';
 import 'package:swallow/Models/user.dart';
 
 //region riverpod providers
@@ -31,11 +31,11 @@ class AuthController {
     authService.verifyCode(context, verificationId, code);
   }
 
-  void saveUser(BuildContext context, String name, File? picture) {  //profile picture save
-    authService.savePicture(context, name, picture, ref);
+  void saveUser(BuildContext context, String name, File? picture) {
+    authService.saveUser(context, name, picture, ref);
   }
 
-  Future<UserModel?> getUser () async {          //current user data
+  Future<UserModel?> getUser () async {
     UserModel? user = await authService.getCurrentUser();
     return user;
   }

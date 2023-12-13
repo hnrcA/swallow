@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:swallow/Common/Enum/message.dart';
-import 'package:swallow/Services/storage.dart';
+import 'package:swallow/Services/storageService.dart';
 import 'package:swallow/Common/common.dart';
 import 'package:swallow/Models/message.dart';
 import 'package:swallow/Models/user.dart';
@@ -95,6 +95,7 @@ class ChatService {
       snackBar(context, e.toString());
     }
   }
+
   void sendPicture(BuildContext context, File file, String receiverId, UserModel senderData, ProviderRef ref, MessageEnum messageEnum ) async {
     try {
       var sent = DateTime.now();
@@ -106,7 +107,11 @@ class ChatService {
       var userData = await firestore.collection('Users').doc(receiverId).get();
       receiverData = UserModel.fromMap(userData.data()!);
 
-      _saveToCollection(senderData,receiverData, 'kép📷', sent, receiverId); //TODO ÁTNÉZNI
+      if(messageEnum.type == MessageEnum.picture.type) { //todo csekkolás
+        _saveToCollection(senderData,receiverData, 'Fényképes üzenet', sent, receiverId);
+      } else {
+        _saveToCollection(senderData,receiverData, 'Videó üzenet', sent, receiverId);
+      }
       _saveMessageToCollection(messageId, url, sent, senderData.name, receiverId, receiverData.name, messageEnum);
     } catch (e) {
       snackBar(context, e.toString());
