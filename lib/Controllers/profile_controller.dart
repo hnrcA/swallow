@@ -29,7 +29,7 @@ class ProfileController {
     authService.saveUser(context, name, picture, ref);
   }
 
-  (String?,String?,String?) getPhoneNumber() { //TODO ÁTNEVEZÉS
+  (String?,String?,String?) getUserStrings() {
     return (authService.auth.currentUser!.displayName,
     authService.auth.currentUser!.phoneNumber,
     authService.auth.currentUser!.photoURL);

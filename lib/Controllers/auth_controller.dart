@@ -31,11 +31,11 @@ class AuthController {
     authService.verifyCode(context, verificationId, code);
   }
 
-  void saveUser(BuildContext context, String name, File? picture) {  //profile picture save
+  void saveUser(BuildContext context, String name, File? picture) {
     authService.saveUser(context, name, picture, ref);
   }
 
-  Future<UserModel?> getUser () async {          //current user data
+  Future<UserModel?> getUser () async {
     UserModel? user = await authService.getCurrentUser();
     return user;
   }

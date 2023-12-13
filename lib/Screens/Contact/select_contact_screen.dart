@@ -12,7 +12,6 @@ class SelectContactScreen extends ConsumerWidget {
     ref.read(contactControllerProvider).selectContact(context, contact);
   }
 
-  //TODO IKON 127
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -26,7 +25,6 @@ class SelectContactScreen extends ConsumerWidget {
               onTap: () => selectContact(context, ref, contact),
               child: ListTile(
                 title: Text(contact.displayName),
-                //TODO finomítás
               ),
             );
           }),

@@ -4,19 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:swallow/Controllers/auth_controller.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
+class PhoneScreen extends ConsumerStatefulWidget {
   static const String route= '/login';
-  const LoginScreen({Key? key}) : super(key: key);
+  const PhoneScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<PhoneScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends ConsumerState<PhoneScreen> {
   final controller = TextEditingController();
   Country? country;
 
-  //region Logic
   void chooseCountry () {
     showCountryPicker(context: context, onSelect: (Country _country) {
       setState(() {
@@ -40,7 +39,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   //endregion
 
-  //TODO FINOMÍTÁS
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -69,7 +67,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 children: [
                   if(country!=null)
                    Padding(
-                     padding: const EdgeInsets.only(top: 9.0),
+                     padding: const EdgeInsets.only(bottom: 21.0),
                      child: Text('+${country!.phoneCode}', style: const TextStyle(
                        fontSize: 16,
                        fontWeight: FontWeight.bold,

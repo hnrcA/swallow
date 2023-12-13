@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swallow/Screens/Chat/chat_screen.dart';
-import 'package:swallow/Screens/Login/login_screen.dart';
+import 'package:swallow/Screens/Login/phone_screen.dart';
 import 'package:swallow/Screens/Profile/profile_screen.dart';
 import 'package:swallow/Screens/Contact/select_contact_screen.dart';
 import 'package:swallow/Screens/Login/otp_screen.dart';
@@ -8,8 +8,8 @@ import 'package:swallow/Screens/Login/user_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch(settings.name) {
-    case LoginScreen.route:
-      return MaterialPageRoute(builder: (context) => const LoginScreen(),
+    case PhoneScreen.route:
+      return MaterialPageRoute(builder: (context) => const PhoneScreen(),
       );
     case OtpScreen.route:
       final verificationId = settings.arguments as String;

@@ -17,7 +17,7 @@ class MessageCard extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width - 60,
-          minWidth:MediaQuery.of(context).size.width- 290,
+          minWidth:MediaQuery.of(context).size.width- 260,
         ),
         child: Card(
           elevation: 1,
@@ -27,7 +27,7 @@ class MessageCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: messageEnum.type == MessageEnum.text ? const EdgeInsets.only(
+                padding: messageEnum.type == MessageEnum.text.type ? const EdgeInsets.only(
                   left: 40,
                   right: 30,
                   top: 5,

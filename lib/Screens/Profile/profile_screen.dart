@@ -52,7 +52,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
   }
   (String?,String?,String?) getPhoneNumber() {
-     return ref.read(profileControllerProvider).getPhoneNumber();
+     return ref.read(profileControllerProvider).getUserStrings();
   }
 
   @override

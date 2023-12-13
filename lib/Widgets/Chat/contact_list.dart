@@ -65,7 +65,6 @@ class ContactList extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  // const Divider(color: Colors.black, indent: 100), //todo nem tom kell e
                 ],
               );
             },

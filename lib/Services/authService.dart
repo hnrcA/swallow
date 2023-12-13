@@ -26,7 +26,7 @@ class AuthService {
           await auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
-          snackBar(context, e.toString());
+          snackBar(context, "Kérjük ellenőrizze a telefonszámát / internet kapcsolatát!");
         },
         codeSent: (String verificationId, int? resendToken) async {
           Navigator.pushNamed(context, OtpScreen.route, arguments: verificationId);
@@ -43,9 +43,9 @@ class AuthService {
     try {
       var uid = auth.currentUser!.uid;
       await firestore.collection('Users').doc(uid).
-      update({'name': 'Törölt felhasználó',
+      update({'phone': '00', 'name': 'Törölt felhasználó',
         'picture': 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-        'isOnline': 'false', 'phone': '00' });
+        'isOnline': 'false' });
       await auth.currentUser!.delete();
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
     } on FirebaseAuthException catch (e) {
