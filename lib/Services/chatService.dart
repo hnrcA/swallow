@@ -107,7 +107,7 @@ class ChatService {
       var userData = await firestore.collection('Users').doc(receiverId).get();
       receiverData = UserModel.fromMap(userData.data()!);
 
-      if(messageEnum.type == MessageEnum.picture.type) { //todo csekkolás
+      if(messageEnum.type == MessageEnum.picture.type) {
         _saveToCollection(senderData,receiverData, 'Fényképes üzenet', sent, receiverId);
       } else {
         _saveToCollection(senderData,receiverData, 'Videó üzenet', sent, receiverId);

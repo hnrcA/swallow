@@ -43,17 +43,16 @@ class AuthService {
     try {
       var uid = auth.currentUser!.uid;
       await firestore.collection('Users').doc(uid).
-      update({'phone': '00', 'name': 'Törölt felhasználó',
-        'picture': 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-        'isOnline': 'false' });
+      update({'name': 'Törölt felhasználó',
+        'phone': '00',
+        'isOnline': 'false',
+        'picture': 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'});
       await auth.currentUser!.delete();
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LandingScreen()), (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == "requires-recent-login") {
         snackBar(context, "A fiókod törléséhez kérlek lépj -ki, majd -be.");
       }
-    } catch (e) {
-      print(e);
     }
   }
 
