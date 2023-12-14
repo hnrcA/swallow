@@ -12,7 +12,7 @@ class OtpScreen extends ConsumerWidget {
 
   void verifyCode(BuildContext context, String code, WidgetRef ref) {
     ref.read(authServiceProvider).verifyCode(context, verificationId, code);
-    Navigator.pushNamedAndRemoveUntil(context, UserScreen.route, (route) => false); //todo jó-e
+    Navigator.pushNamedAndRemoveUntil(context, UserScreen.route, (route) => false);
   }
 
   @override
